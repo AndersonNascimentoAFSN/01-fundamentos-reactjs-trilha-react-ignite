@@ -1,5 +1,6 @@
 import { Header, Post, Sidebar } from "../../components";
 import styles from "./styles.module.css";
+
 export function Home() {
   return (
     <>
@@ -9,7 +10,31 @@ export function Home() {
         <main>
           <Post
             author="Anderson Nascimento"
-            content="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptatum consequuntur at suscipit facilis deleniti, assumenda necessitatibus debitis dolorum iure blanditiis porro numquam quaerat dolorem praesentium. Ullam quo sunt molestias unde."
+            role="Web Developer"
+            content={[
+              "Fala pessoal 👋",
+              "Finalmente finalizei meu novo site/portfólio. Foi um baita desafio criar todo o design e codar na unha, mas consegui 💪🏻",
+              <>
+                Acesse e deixe seu feedback 👉 <a href="#">devonlane.design</a>
+              </>,
+              <>
+                <a href="#">#uiux</a> <a href="#">#userexperience</a>
+              </>,
+            ]}
+          />
+          <Post
+            author="Anderson Nascimento"
+            role="Web Developer"
+            content={[
+              "Fala pessoal 👋",
+              "Finalmente finalizei meu novo site/portfólio. Foi um baita desafio criar todo o design e codar na unha, mas consegui 💪🏻",
+              <>
+                Acesse e deixe seu feedback 👉 <a href="#">devonlane.design</a>
+              </>,
+              <>
+                <a href="#">#uiux</a> <a href="#">#userexperience</a>
+              </>,
+            ]}
           />
         </main>
       </div>
