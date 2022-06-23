@@ -1,16 +1,16 @@
 import { PencilLine } from "phosphor-react";
-import styles from "./styles.module.css";
+import { Avatar } from "../Avatar";
 import background from "../../../assets/background.jpeg";
+import styles from "./styles.module.css";
 
 export function Sidebar() {
   return (
     <aside className={styles.sidebar}>
-      <img src={background} alt="Imagem de background definida pelo usuário" />
+      <img src={background} alt="Imagem de background definida pelo usuário" className={styles.backgroundImg}/>
       <header className={styles.profile}>
-        <img
-          src="https://github.com/andersonnascimentoafsn.png"
-          alt="Foto do perfil do usuário"
-          className={styles.avatar}
+        <Avatar
+          link="https://github.com/andersonnascimentoafsn.png"
+          title="Foto do perfil do usuário"
         />
         <strong className={styles.name}>Anderson Nascimento</strong>
         <span className={styles.role}>Web Developer</span>
@@ -18,7 +18,7 @@ export function Sidebar() {
 
       <footer>
         <a href="#">
-          <PencilLine size={20}/>
+          <PencilLine size={20} />
           Editar seu perfil
         </a>
       </footer>

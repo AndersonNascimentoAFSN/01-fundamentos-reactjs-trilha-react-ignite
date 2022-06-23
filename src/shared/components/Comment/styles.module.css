@@ -4,12 +4,12 @@
   gap: 1rem;
 }
 
-.comment > img {
+/* .comment > img {
   box-sizing: initial;
   width: 3.34rem;
   height: 3.34rem;
   border-radius: 8px;
-}
+} */
 
 .commentBox {
   flex: 1;
