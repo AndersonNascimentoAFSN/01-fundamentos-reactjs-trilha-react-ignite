@@ -1,35 +1,98 @@
+import { useState } from "react";
+// import PropTypes from "prop-types";
+import { format, formatDistanceToNow } from "date-fns";
+import { ptBR } from "date-fns/locale";
 import { Avatar } from "../Avatar";
 import { Comment } from "../Comment";
 import styles from "./styles.module.css";
+// import { FormatDates } from "../../utils/FormatDates";
 
-export function Post(props) {
+export function Post({ author, content, publishedAt }) {
+  const [comments, setComments] = useState([
+    { id: 1, content: "Muito bom Devon, parabéns!! 👏👏" },
+  ]);
+  const [newComment, setNewComment] = useState("");
+
+  const publishedDateFormatted = format(
+    publishedAt,
+    "d 'de' LLL 'às' HH:mm'h'",
+    {
+      locale: ptBR,
+    }
+  );
+
+  const publishedDateRelativeToNow = formatDistanceToNow(publishedAt, {
+    locale: ptBR,
+    addSuffix: true,
+  });
+
+  const handleNewCommentChange = (event) => setNewComment(event.target.value);
+
+  function handleCreateNewComment(event) {
+    event.preventDefault();
+    // const newCommentText = event.target.comment.value; // programação imperativa
+    setComments((comments) => [
+      ...comments,
+      // { id: comments[comments.length - 1].id + 1, content: newCommentText }, // programação imperativa
+      { id: comments[comments.length - 1].id + 1, content: newComment }, // programação declarativa
+    ]);
+    setNewComment("");
+    // event.target.comment.value = ""; // programação imperativa
+  }
+
   return (
     <article className={styles.post}>
       <header>
         <div className={styles.author}>
-          <Avatar
-            link="https://github.com/andersonnascimentoafsn.png"
-            title="Foto profile usuário"
-          />
+          <Avatar link={author.avatarUrl} title="Foto profile usuário" />
           <div className={styles.authorInfo}>
-            <strong>{props.author}</strong>
-            <span>{props.role}</span>
+            <strong>{author.name}</strong>
+            <span>{author.role}</span>
           </div>
         </div>
-        <time title="11 de maio às 08:13" dateTime="2022-05-11 08:13:30">
-          Publicado há 1h
+        <time
+          title={publishedDateFormatted}
+          dateTime={publishedAt.toISOString()}
+        >
+          {publishedDateRelativeToNow}
         </time>
       </header>
 
       <div className={styles.content}>
-        {props.content.map((content, index) => (
-          <p key={index}>{content}</p>
-        ))}
+        {content.map(({ to, type, content, text = "" }) => {
+          const contentElement = {
+            paragraph: <p key={content}>{content}</p>,
+            link: (
+              <p key={content}>
+                {text}
+                <a href={to}>{content}</a>
+              </p>
+            ),
+          };
+          return contentElement[type];
+          // if (type === "paragraph") return <p key={index}>{content}</p>;
+          // if (type === "link")
+          //   return (
+          //     <p key={index}>
+          //       {text}
+          //       <a href={to}>{content}</a>
+          //     </p>
+          //   );
+        })}
       </div>
 
-      <form className={styles.commentForm}>
+      <form
+        name="feedbacks"
+        onSubmit={handleCreateNewComment}
+        className={styles.commentForm}
+      >
         <strong>Deixe seu feedback</strong>
-        <textarea placeholder="Escreva um comentário..." />
+        <textarea
+          name="comment"
+          value={newComment}
+          onChange={handleNewCommentChange}
+          placeholder="Escreva um comentário..."
+        />
 
         <footer>
           <button type="submit">Publicar</button>
@@ -37,10 +100,16 @@ export function Post(props) {
       </form>
 
       <div className={styles.commentList}>
-        <Comment />
-        <Comment />
-        <Comment />
+        {comments.map((comment) => (
+          <Comment key={comment.id} content={comment.content} />
+        ))}
       </div>
     </article>
   );
 }
+
+// Post.propTypes = {
+//   author: PropTypes.string,
+//   content: PropTypes.string,
+//   publishedAt: PropTypes.string,
+// };
