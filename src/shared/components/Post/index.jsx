@@ -40,6 +40,18 @@ export function Post({ author, content, publishedAt }) {
     // event.target.comment.value = ""; // programação imperativa
   }
 
+  function deleteComment(id) {
+    // const newListComments = [...comments]; // imutabilidade, as variáveis não sofrem mutação, nós criamos um novo valor (um novo espaço na memória);
+    // const index = newListComments.findIndex((comment) => comment.id === +id);
+    // const commentsWithoutDeletedOne = newListComments.splice(index, 1);
+
+    const commentsWithoutDeletedOne = comments.filter(
+      (comment) => comment.id !== id
+    );
+
+    setComments(commentsWithoutDeletedOne);
+  }
+
   return (
     <article className={styles.post}>
       <header>
@@ -101,7 +113,12 @@ export function Post({ author, content, publishedAt }) {
 
       <div className={styles.commentList}>
         {comments.map((comment) => (
-          <Comment key={comment.id} content={comment.content} />
+          <Comment
+            id={comment.id}
+            key={comment.id}
+            content={comment.content}
+            onDeleteComment={deleteComment}
+          />
         ))}
       </div>
     </article>
